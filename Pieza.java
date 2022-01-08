@@ -5,6 +5,7 @@ public class Pieza{
     protected String color;
     protected boolean activa;
     protected int numero;
+    protected int numMov;
 
     public Pieza(int xc, int yc, String tipo, String color){
         setCoordenadaX(xc);
@@ -12,6 +13,7 @@ public class Pieza{
         setTipo(tipo);
         setColor(color);
         activa = true;
+        numMov = 0;
     }
 
     public Pieza(int xc, int yc, String tipo, String color, int num){
@@ -21,6 +23,15 @@ public class Pieza{
         setColor(color);
         setNumero(num);
         activa = true;
+        numMov = 0;
+    }
+
+    public void setNumMov(int n){
+        if(n<0){
+            //error
+        }else{
+            numMov = n;
+        }
     }
 
     public void setNumero(int num){
@@ -107,9 +118,18 @@ public class Pieza{
         return activa;
     }
 
+    public int getNumPieza(){
+        return numero;
+    }
+
+    public int getNumMov(){
+        return numMov;
+    }
+
     public String toString(){
         return tipo + numero + color; 
     }
+
 
     public boolean equals(Object pieza){
         Pieza pz = (Pieza) pieza;
@@ -122,6 +142,37 @@ public class Pieza{
         }else{
             return false;
         }
+    }
+
+    //Metodo para mover una pieza
+    public void mover(int cx, int cy, Pieza[][] arreglo){
+        int x = getCoordenadaX();
+        int y = getCoordenadaY();
+        setCoordenadaX(cx);
+        setCoordenadaY(cy);
+        arreglo[cx][cy] = arreglo[x][y];
+        arreglo[x][y]=null;
+        numMov+=1;
+    }
+
+    //requiere la matriz el arreglo con el nombre de las piezas en la forma caballoblanco y el arreglo con el numero de piezas que coinsida con el nombre
+    public void reemplaza(int cx, int cy, Pieza[][] arreglo, String[] piezas, int[] numpiezas){
+        String nombre = arreglo[cx][cy].tipo +arreglo[cx][cy].color;
+        numpiezas[buscar(piezas, nombre)]-=1;
+        arreglo[cx][cy].setActividad(false);
+        //ver pieza, color, restar piezas, quitar actividad de la pieza   arreglo con nombre y color
+        mover(cx,cy,arreglo);
+    }
+
+    //Busca un String en un arreglo
+    public static int buscar(String[] arreglo, String buscado){
+        int m=0;
+        for(int i=0; i<arreglo.length; i++){
+            if(arreglo[i].equals(buscado)){
+                m=i;
+            }
+        }
+        return m;
     }
 
 }
