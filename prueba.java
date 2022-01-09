@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class prueba {
     public static void main(String[] args) {
@@ -19,24 +20,26 @@ public class prueba {
          * System.out.println(arreglo[5][4]);
          */
 
-        Scanner scan = new Scanner(System.in);
-        Tablero tablero = new Tablero();
-        tablero.iniciaTablero();
-        System.out.println(tablero.visualizar());
-        tablero.peon1N.getActividad();
-        // tablero.torre1B.
-        // tablero.arreglo[][]
-        String r = "hola";
-        boolean h = true;
-        do {
-            System.out.println("Ingresa un número");
-            String respuesta = scan.nextLine();
-            if (respuesta.equals("h")) {
-                r = respuesta;
-                h = false;
-            }
-        } while (h);
-        System.out.println(r);
+        /*
+         * Scanner scan = new Scanner(System.in);
+         * Tablero tablero = new Tablero();
+         * tablero.iniciaTablero();
+         * System.out.println(tablero.visualizar());
+         * tablero.peon1N.getActividad();
+         * // tablero.torre1B.
+         * // tablero.arreglo[][]
+         * String r = "hola";
+         * boolean h = true;
+         * do {
+         * System.out.println("Ingresa un número");
+         * String respuesta = scan.nextLine();
+         * if (respuesta.equals("h")) {
+         * r = respuesta;
+         * h = false;
+         * }
+         * } while (h);
+         * System.out.println(r);
+         */
 
         /*
          * public Pieza[][] hacerTablero(){
@@ -96,5 +99,8 @@ public class prueba {
          * return arreglo;
          * }
          */
+
+        Random random = new Random();
+        System.out.println(random.nextInt(2));
     }
 }
