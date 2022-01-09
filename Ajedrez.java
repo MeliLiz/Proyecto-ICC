@@ -21,21 +21,24 @@ public class Ajedrez {
         int ceros = -1;
         boolean turnoblanco = true;
         int movimientos = 10;
-        do {
+        juego: do {
             if (turnoblanco) {
                 System.out.println("\nTurno del jugador 1\n");
             } else {
                 System.out.println("\nTurno del jugador 2\n");
             }
-            preguntaymueve(arreglo, piezas, numpiezas, scan1, scan2);
+            preguntaymueve(arreglo, piezas, numpiezas, scan1, scan2, turnoblanco);
             ceros = buscarNum(numpiezas, 0);
             if (ceros != -1) {
-                // terminar juego, ver de quien es la pieza que tiene 0 y asociarla con el
-                // nombre del jugador
+                System.out.println("El juego terminó, ganó el jugador actual");
+                break juego;
             }
             turnoblanco = !turnoblanco;
             movimientos -= 1;
         } while (ceros == -1 && movimientos != 0);
+        if (movimientos == 0) {
+            System.out.println("Se acabaron los movimientos posible, gana jugador al azar");
+        }
     }
 
     public static Pieza[][] hacerTablero() {
@@ -164,13 +167,13 @@ public class Ajedrez {
                     System.out.print(arreglo[i][j] + "   ");
                 }
             }
-            System.out.println();
+            System.out.println("\n");
         }
         return " ";
     }
 
     public static void preguntaymueve(Pieza[][] arreglo, String[] piezas, int[] numpiezas, Scanner scan1,
-            Scanner scan2) {
+            Scanner scan2, boolean turnoblanco) {
         int w = 0;
         int m;
         int k;
@@ -186,11 +189,23 @@ public class Ajedrez {
                 boolean esta = buscar(arreglo, respuesta); // Busca si la pieza esta en el tablero
 
                 // si la pieza esta en el tablero
-                if (esta) {
+                outerloop: if (esta) {
 
                     int[] arr = regresarPosPieza(arreglo, respuesta); // arrreglo con las coordenadas de la posicion de
                                                                       // la pieza en el tablero
                     boolean piezaValida = arreglo[arr[0]][arr[1]].validarPieza();// se valida que la pieza esta activa
+
+                    if (turnoblanco) {
+                        if (arreglo[arr[0]][arr[1]].color.equals("negro")) {
+                            System.out.println("No puedes mover esta pieza");
+                            break outerloop;
+                        }
+                    } else {
+                        if (arreglo[arr[0]][arr[1]].color.equals("blanco")) {
+                            System.out.println("No puedes mover esta pieza");
+                            break outerloop;
+                        }
+                    }
 
                     // Si la pieza esta activa, preguntar movimiento deseado de la pieza
                     if (piezaValida) {
