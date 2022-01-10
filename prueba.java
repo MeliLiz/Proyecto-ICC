@@ -100,7 +100,17 @@ public class prueba {
          * }
          */
 
-        Random random = new Random();
-        System.out.println(random.nextInt(2));
+        /*Random random = new Random();
+        System.out.println(random.nextInt(2));*/
+        int i=5;
+        i=multiplica(i);
+
+        System.out.println(i);
+
+    }
+
+    public static int multiplica(int x){
+        x=x*2;
+        return x;
     }
 }

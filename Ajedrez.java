@@ -11,8 +11,100 @@ public class Ajedrez {
 
         if (args.length == 0) {
             menu(scan1);
+
         } else if (args.length == 1) {
             // jugar con la computadora
+            String jugador1blanco = args[0];
+            String jugador2negro = "Computadora";
+            System.out.println("\n" + jugador1blanco + " jugará con las piezas blancas");
+            System.out.println(jugador2negro + " jugará con las piezas negras");
+
+            // Creamos tablero
+            Pieza[][] arreglo = hacerTablero();
+            // Creamos arreglo con el nombre de las piezas
+            String[] piezas = { "torreblanco", "caballoblanco", "reyblanco", "reinablanco", "peonblanco", "torrenegro",
+                    "caballonegro", "reynegro", "reinanegro", "peonnegro" };
+            // Creamos el arreglo con el número de piezas
+            int[] numpiezas = { 2, 2, 1, 1, 6, 2, 2, 1, 1, 6 };
+
+            // repetir hasta que algun jugador se quede sin piezas de algún tipo
+            int ceros = -1;
+            boolean turnoblanco = true;
+            int movimientos = 10;
+            juego: do {
+                /*
+                 * if (turnoblanco) {
+                 * System.out.println("\nTurno de " + jugador1blanco + "\n");
+                 * } else {
+                 * System.out.println("\nTurno de " + jugador2negro + "\n");
+                 * }
+                 */
+                preguntaymueve(arreglo, piezas, numpiezas, scan1, scan2, turnoblanco, jugador1blanco, jugador2negro);
+                ceros = buscarNum(numpiezas, 0);
+                if (ceros != -1) {
+                    System.out.print("\nEl juego terminó, ganó ");
+                    if (turnoblanco) {
+                        System.out.print(jugador1blanco);
+                    } else {
+                        System.out.print(jugador2negro);
+                    }
+                    break juego;
+                }
+                turnoblanco = !turnoblanco;
+                movimientos -= 1;
+            } while (ceros == -1 && movimientos != 0);
+            if (movimientos == 0) {
+                System.out.println("Se acabaron los movimientos posibles, gana ");
+                if (random.nextInt(2) == 1) {
+                    System.out.println(jugador1blanco);
+                } else {
+                    System.out.println(jugador2negro);
+                }
+            }
+
+            /*int ceros = -1;
+            boolean turnoblanco = true;
+            int movimientos = 10;
+            juego: do {
+                preguntaymueve(arreglo, piezas, numpiezas, scan1, scan2, turnoblanco, jugador1blanco, jugador2negro);
+                ceros = buscarNum(numpiezas, 0);
+                if (ceros != -1) {
+                    System.out.print("\nEl juego terminó, ganó "+ jugador1blanco);
+                    break juego;
+                }
+                turnoblanco = !turnoblanco;
+                movimientos -= 1;
+                if (movimientos == 0) {
+                    System.out.println("Se acabaron los movimientos posibles, gana ");
+                    if (random.nextInt(2) == 1) {
+                        System.out.println(jugador1blanco);
+                    } else {
+                        System.out.println(jugador2negro);
+                    }
+                }
+                if(!turnoblanco){
+                    computadora(arreglo, piezas, numpiezas, scan1, scan2, turnoblanco, jugador1blanco, jugador2negro);
+                }
+                ceros = buscarNum(numpiezas, 0);
+                if (ceros != -1) {
+                    System.out.print("\nEl juego terminó, ganó "+ jugador2negro);
+                    break juego;
+                }
+                turnoblanco = !turnoblanco;
+                movimientos -= 1;
+            } while (movimientos != 0);
+            if (movimientos == 0) {
+                System.out.println("Se acabaron los movimientos posibles, gana ");
+                if (random.nextInt(2) == 1) {
+                    System.out.println(jugador1blanco);
+                } else {
+                    System.out.println(jugador2negro);
+                }
+            }*/
+
+
+
+
         } else if (args.length == 2) {
             String jugador1blanco = args[0];
             String jugador2negro = args[1];
@@ -46,12 +138,14 @@ public class Ajedrez {
                 preguntaymueve(arreglo, piezas, numpiezas, scan1, scan2, turnoblanco, jugador1blanco, jugador2negro);
                 ceros = buscarNum(numpiezas, 0);
                 if (ceros != -1) {
+                    System.out.println(visualizarTablero(arreglo));
                     System.out.print("\nEl juego terminó, ganó ");
                     if (turnoblanco) {
-                        System.out.print(jugador1blanco);
+                        System.out.print(jugador1blanco+"\n");
                     } else {
-                        System.out.print(jugador2negro);
+                        System.out.print(jugador2negro+"\n");
                     }
+                    
                     break juego;
                 }
                 turnoblanco = !turnoblanco;
@@ -203,6 +297,8 @@ public class Ajedrez {
 
     public static void preguntaymueve(Pieza[][] arreglo, String[] piezas, int[] numpiezas, Scanner scan1,
             Scanner scan2, boolean turnoblanco, String jugador1blanco, String jugador2negro) {
+
+        Random random =new Random();
         int w = 0;
         int m;
         int k;
@@ -219,16 +315,31 @@ public class Ajedrez {
             // se repite la pregunta hasta que se responda con una pieza valida
 
             pieza: do {
-                System.out.println(visualizarTablero(arreglo));
+
+                boolean esta =false;
+                String pzElegida = "";
+                if(jugador2negro.equals("Computadora")&&!turnoblanco){
+
+                }else{
+                    System.out.println(visualizarTablero(arreglo));
+                }
+                //System.out.println(visualizarTablero(arreglo));
+                if(jugador2negro.equals("Computadora") && !turnoblanco){
+                    String [] pzas = {"torre1negro","torre2negro","caballo1negro","caballo2negro","reina1negro","rey1negro","peon1negro","peon2negro","peon3negro","peon4negro","peon5negro","peon6negro"}; 
+                    int numRandom = random.nextInt(12);
+                    pzElegida = pzas[numRandom];
+                    System.out.println(pzElegida); //////////////////////////////////////////////////////////////////////7
+                    esta = buscar(arreglo, pzElegida);
+                }else{
                 System.out.println("¿Que pieza quieres mover? (Ingresa nombre completo)"); // Pregunta pieza
-                String respuesta = scan1.nextLine();// Guarda respuesta
-                respuesta = respuesta.strip().toLowerCase();
-                boolean esta = buscar(arreglo, respuesta); // Busca si la pieza esta en el tablero
+                pzElegida = scan1.nextLine().strip().toLowerCase();;// Guarda respuesta
+                esta = buscar(arreglo, pzElegida); // Busca si la pieza esta en el tablero
+                }
 
                 // si la pieza esta en el tablero
                 outerloop: if (esta) {
 
-                    int[] arr = regresarPosPieza(arreglo, respuesta); // arrreglo con las coordenadas de la posicion de
+                    int[] arr = regresarPosPieza(arreglo, pzElegida); // arrreglo con las coordenadas de la posicion de
                                                                       // la pieza en el tablero
                     boolean piezaValida = arreglo[arr[0]][arr[1]].validarPieza();// se valida que la pieza esta activa
 
@@ -246,20 +357,36 @@ public class Ajedrez {
 
                     // Si la pieza esta activa, preguntar movimiento deseado de la pieza
                     if (piezaValida) {
-                        boolean y = true;
+
+                        String tipoPz = arreglo[arr[0]][arr[1]].tipo;
                         int columna = -1;
                         int fila = -1;
+
+
+                        boolean y = true;
                         while (y) {// trycatch
-                            System.out.println("Ingresa el numero de fila(0-5 de arriba a abajo)");
-                            fila = scan2.nextInt();
-                            if (fila < 0 || fila > 5) {
-                                System.out.println("Fila no valida");
+                            if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                                int[] elegidos = calculaMov(tipoPz, arr, random);
+                                fila = elegidos[0];
+                                columna = elegidos[1];
+                            }else{
+                                System.out.println("Ingresa el numero de fila(0-5 de arriba a abajo)");
+                                fila = scan2.nextInt();
+                                System.out.println("Ingresa el numero de columna(0-5 de izquierda a derecha)");
+                                columna = scan2.nextInt();
+                            }
+                            if (fila < 0 || fila > 5|| columna < 0 || columna > 5) {
+                                if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                                    System.out.println("Calculando posicion");
+                                }else{
+                                    System.out.println("Coordenadas no validas");
+                                }    
                             } else {
                                 y = false;
                             }
                         }
 
-                        y = true;
+                        /*y = true;
                         while (y) { // trycatch
                             System.out.println("Ingresa el numero de columna(0-5 de izquierda a derecha)");
                             columna = scan2.nextInt();
@@ -268,9 +395,9 @@ public class Ajedrez {
                             } else {
                                 y = false;
                             }
-                        }
+                        }*/
 
-                        String tipoPz = arreglo[arr[0]][arr[1]].tipo;// obtenemos el tipo de pieza que es
+                        //String tipoPz = arreglo[arr[0]][arr[1]].tipo;// obtenemos el tipo de pieza que es
                         // System.out.println(tipoPz);
 
                         // Dependiendo el tipo de pieza, hacemos las validaciones correspondientes
@@ -282,7 +409,10 @@ public class Ajedrez {
                                     x = false;
                                     break pieza;
                                 } else {
-                                    System.out.println("\nMovimiento no valido\n");
+                                    if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                                    }else{
+                                        System.out.println("\nMovimiento no valido\n");
+                                    }   
                                 }
                                 break;
                             case "caballo":
@@ -291,7 +421,10 @@ public class Ajedrez {
                                     x = false;
                                     break pieza;
                                 } else {
-                                    System.out.println("\nMovimiento no válido\n");
+                                    if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                                    }else{
+                                        System.out.println("\nMovimiento no valido\n");
+                                    } 
                                 }
                                 break;
                             case "rey":
@@ -300,7 +433,10 @@ public class Ajedrez {
                                     x = false;
                                     break pieza;
                                 } else {
-                                    System.out.println("\nMovimiento no válido\n");
+                                    if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                                    }else{
+                                        System.out.println("\nMovimiento no valido\n");
+                                    } 
                                 }
                                 break;
                             case "reina":
@@ -309,7 +445,10 @@ public class Ajedrez {
                                     x = false;
                                     break pieza;
                                 } else {
-                                    System.out.println("\nMovimiento no válido\n");
+                                    if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                                    }else{
+                                        System.out.println("\nMovimiento no valido\n");
+                                    } 
                                 }
                                 break;
                             case "peon":
@@ -338,7 +477,10 @@ public class Ajedrez {
                                     }
                                     break pieza;
                                 } else {
-                                    System.out.println("\nMovimiento invalido\n");
+                                    if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                                    }else{
+                                        System.out.println("\nMovimiento no valido\n");
+                                    } 
                                 }
                                 break;
                             default:
@@ -346,11 +488,17 @@ public class Ajedrez {
                         // System.out.println(visualizarTablero(arreglo));
 
                     } else {
-                        System.out.println("\nPieza no valida\n");
+                        if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                        }else{
+                            System.out.println("\nPieza no valida\n");
+                        } 
                         w = 1;
                     }
                 } else {
-                    System.out.println("\nPieza no valida\n");
+                    if(jugador2negro.equals("Computadora")&&!turnoblanco){
+                    }else{
+                        System.out.println("\nPieza no valida\n");
+                    } 
                     w = 1;
                 }
                 // System.out.println(visualizarTablero(arreglo));
@@ -385,5 +533,90 @@ public class Ajedrez {
 
             }
         } while (h);
+    }
+
+    public static int[] calculaMov(String tipoPz, int[] arr, Random random){
+        int[] posicionesElegidas = new int[2];
+        int randomcol;
+        int randomreng;
+        switch (tipoPz){
+            case "torre":
+                boolean arrabderizq=random.nextBoolean();//verdadero se mueve a los lados, si falso arriba abajo
+                boolean masmenos =random.nextBoolean();
+                int numpos=random.nextInt(6);
+                if(arrabderizq){
+                    posicionesElegidas[0]=arr[0];
+                    if(masmenos){
+                        posicionesElegidas[1]=arr[1]+numpos;
+                    }else{
+                        posicionesElegidas[1]=arr[1]-numpos;
+                    }
+                }else{
+                    posicionesElegidas[1]=arr[1];
+                    if(masmenos){
+                        posicionesElegidas[0]=arr[0]+numpos;
+                    }else{
+                        posicionesElegidas[0]=arr[0]-numpos;
+                    }
+                }
+            break;
+            case "caballo":
+                int x;
+                int y;
+                int signo = random.nextInt(3);
+                boolean unodos = random.nextBoolean();
+                if(unodos){
+                    x=1;
+                    y=2;
+                }else{
+                    x=2;
+                    y=1;
+                }
+                switch(signo){
+                    case 0:
+                        x=-x;
+                    break;
+                    case 1:
+                        y=-y;
+                    break;
+                    case 2:
+                        x=-x;
+                        y=-y;
+                    break;
+                    default:
+                    break;
+                }
+            break;
+            case "rey":
+                
+                do{
+                    randomcol = random.nextInt(3);
+                    randomreng = random.nextInt(3);
+                }while(randomcol==0&&randomreng==0);
+
+                if(randomcol==2){
+                    posicionesElegidas[1] = arr[1]-1;
+                }else{
+                    posicionesElegidas[1] = arr[1]+randomcol;
+                }
+                if(randomreng==2){
+                    posicionesElegidas[0] = arr[0]-1;
+                }else{
+                    posicionesElegidas[0] = arr[0]+randomcol;
+                }
+            break;
+            case "reina":
+            break;
+            case "peon":
+                posicionesElegidas[0] = arr[0]-1;
+                randomcol = random.nextInt(3);
+                if(randomcol==2){
+                    posicionesElegidas[1] = arr[1]-1;
+                }else{
+                    posicionesElegidas[1] = arr[1]+randomcol;
+                }
+            break;
+        }
+        return posicionesElegidas;
     }
 }

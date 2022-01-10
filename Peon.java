@@ -99,4 +99,6 @@ public class Peon extends Pieza {
         setNumero(numpiezas[n]);
     }
 
+    
+
 }

@@ -53,7 +53,7 @@ public class Torre extends Pieza {
                         // System.out.println("pasa");
                     }
                 }
-                System.out.println("3");
+                //System.out.println("3");
                 System.out.println(n);
                 return n;
             } else {
@@ -68,7 +68,7 @@ public class Torre extends Pieza {
                 return n;
             }
         } else {
-            System.out.println("5");
+            //System.out.println("5");
             return false;
         }
     }
@@ -94,22 +94,22 @@ public class Torre extends Pieza {
         if (validarMov(cx, cy)) {
             if (movSinEstorbo(cx, cy, arreglo)) {
                 if (hayPieza(cx, cy, arreglo) == 2) {
-                    System.out.println("haypzdel mismo color");
+                    //System.out.println("haypzdel mismo color");
                     return false;
                 } else if (hayPieza(cx, cy, arreglo) == 3) {
                     reemplaza(cx, cy, arreglo, piezas, numpiezas);
-                    System.out.println("haypzde dif color color");
+                    //System.out.println("haypzde dif color color");
                     return true;
                 } else {
-                    System.out.println("else");
+                    //System.out.println("else");
                     return true;
                 }
             } else {
-                System.out.println("otro else");
+                //System.out.println("otro else");
                 return false;
             }
         } else {
-            System.out.println("regresa false");
+            //System.out.println("regresa false");
             return false;
         }
     }

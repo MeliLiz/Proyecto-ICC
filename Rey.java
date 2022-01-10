@@ -8,7 +8,7 @@ public class Rey extends Pieza {
     // pieza y come
     public boolean validarMov(int cx, int cy, Pieza[][] arreglo, String[] piezas, int[] numpiezas) {
         if ((cy == coordenadaY + 1 && cx == coordenadaX) || (cy == coordenadaY - 1 && cx == coordenadaX)
-                || (cx == coordenadaX + 1 && cy == coordenadaY) || (cx == coordenadaX - 1 && cy == coordenadaY)) {
+                || (cx == coordenadaX + 1 && cy == coordenadaY) || (cx == coordenadaX - 1 && cy == coordenadaY)||(cx == coordenadaX +1 && cy == coordenadaY+1)||(cx == coordenadaX + 1 && cy == coordenadaY-1)||(cx == coordenadaX - 1 && cy == coordenadaY+1)||(cx == coordenadaX - 1 && cy == coordenadaY-1)) {
             if (sePudoMover(cx, cy, arreglo)) {
                 return true;
             } else {
