@@ -4,13 +4,6 @@ public class Reina extends Pieza {
         super(x, y, "reina", color, numero);
     }
 
-    /*
-     * public boolean validarMov(int cx, int cy){
-     * int coordX = this.coordenadaX;
-     * int coordY = this.coordenadaY;
-     * }
-     */
-
     // Metodo que valida si el movimiento del peon es valido y de serlo mueve la
     // pieza y come
     public boolean validarMov(int cx, int cy, Pieza[][] arreglo) {

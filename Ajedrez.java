@@ -150,7 +150,7 @@ public class Ajedrez {
                 }
                 turnoblanco = !turnoblanco;
                 movimientos -= 1;
-            } while (ceros == -1 && movimientos != 0);
+            } while (movimientos != 0);
             if (movimientos == 0) {
                 System.out.println("Se acabaron los movimientos posibles, gana ");
                 if (random.nextInt(2) == 1) {
@@ -299,7 +299,7 @@ public class Ajedrez {
             Scanner scan2, boolean turnoblanco, String jugador1blanco, String jugador2negro) {
 
         Random random =new Random();
-        int w = 0;
+        //int w = 0;
         int m;
         int k;
         boolean x = true;
@@ -311,7 +311,7 @@ public class Ajedrez {
         }
 
         // Se repite hasta ingresar un movimiento válido
-        do {
+        //do {
             // se repite la pregunta hasta que se responda con una pieza valida
 
             pieza: do {
@@ -369,6 +369,7 @@ public class Ajedrez {
                                 int[] elegidos = calculaMov(tipoPz, arr, random);
                                 fila = elegidos[0];
                                 columna = elegidos[1];
+                                System.out.println("("+fila+","+columna+")");/////////////////////////////////////////////////
                             }else{
                                 System.out.println("Ingresa el numero de fila(0-5 de arriba a abajo)");
                                 fila = scan2.nextInt();
@@ -455,6 +456,7 @@ public class Ajedrez {
                                 Peon peon = (Peon) arreglo[arr[0]][arr[1]];
                                 if (peon.validarMov(fila, columna, arreglo, piezas, numpiezas)) {
                                     x = false;
+
                                     // Si el peon esta en la ultima fila
                                     if (peon.coordenadaX == 5 || peon.coordenadaX == 0) {
                                         boolean s = true;
@@ -473,7 +475,26 @@ public class Ajedrez {
                                             }
                                         } while (s);
                                         // Peon promocion = (Peon) arreglo[arr[0]][arr[1]];
-                                        peon.promover(r, arreglo, piezas, numpiezas);
+                                        Pieza nueva = peon.promover(r, arreglo, piezas, numpiezas);
+                                        String t = nueva.tipo;
+                                        int xx=nueva.coordenadaX;
+                                        int yy=nueva.coordenadaY;
+                                        String c = nueva.color;
+                                        int num = nueva.numero;
+                                        switch(t){
+                                            case "torre":
+                                                Torre nt= new Torre(xx,yy,c,num);
+                                                arreglo[xx][yy]=nt;
+                                            break;
+                                            case "reina":
+                                                Reina nr=new Reina(xx,yy,c,num);
+                                                arreglo[xx][yy]=nr;
+                                            break;
+                                            case "caballo":
+                                                Reina nc=new Reina(xx,yy,c,num);
+                                                arreglo[xx][yy]=nc;
+                                            break;
+                                        }
                                     }
                                     break pieza;
                                 } else {
@@ -492,18 +513,18 @@ public class Ajedrez {
                         }else{
                             System.out.println("\nPieza no valida\n");
                         } 
-                        w = 1;
+                        //w = 1;
                     }
                 } else {
                     if(jugador2negro.equals("Computadora")&&!turnoblanco){
                     }else{
                         System.out.println("\nPieza no valida\n");
                     } 
-                    w = 1;
+                    //w = 1;
                 }
                 // System.out.println(visualizarTablero(arreglo));
             } while (x);
-        } while (w == 1);
+        //} while (w == 1);
     }
 
     public static void menu(Scanner scan1) {
@@ -606,6 +627,35 @@ public class Ajedrez {
                 }
             break;
             case "reina":
+                boolean horverdiag = random.nextBoolean();
+                if(horverdiag){
+                boolean aabderizq=random.nextBoolean();//verdadero se mueve a los lados, si falso arriba abajo
+                boolean menosmas =random.nextBoolean();
+                int posnum=random.nextInt(6);
+                if(aabderizq){
+                    posicionesElegidas[0]=arr[0];
+                    if(menosmas){
+                        posicionesElegidas[1]=arr[1]+posnum;
+                    }else{
+                        posicionesElegidas[1]=arr[1]-posnum;
+                    }
+                }else{
+                    posicionesElegidas[1]=arr[1];
+                    if(menosmas){
+                        posicionesElegidas[0]=arr[0]+posnum;
+                    }else{
+                        posicionesElegidas[0]=arr[0]-posnum;
+                    }
+                }
+                }else{
+                    int posqueen = random.nextInt(5);
+                    boolean siggueen=random.nextBoolean();
+                    if(siggueen){
+                        posqueen=-posqueen;
+                    }
+                    posicionesElegidas[0]=arr[0]+posqueen;
+                    posicionesElegidas[1]=arr[1]+posqueen;
+                }
             break;
             case "peon":
                 posicionesElegidas[0] = arr[0]-1;

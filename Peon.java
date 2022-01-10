@@ -88,17 +88,29 @@ public class Peon extends Pieza {
     }
 
     // Metodo para promover peones
-    public void promover(String pieza, Pieza[][] arreglo, String[] piezas, int[] numpiezas) {
+    public Pieza promover(String pieza, Pieza[][] arreglo, String[] piezas, int[] numpiezas) {
         // obtener nombre de la pieza
         String nombre = arreglo[coordenadaX][coordenadaY].tipo + arreglo[coordenadaX][coordenadaY].color;
         numpiezas[buscar(piezas, nombre)] -= 1;
-        setTipo(pieza);
-        nombre = arreglo[coordenadaX][coordenadaY].tipo + arreglo[coordenadaX][coordenadaY].color;
+        //setTipo(pieza);
+        nombre = pieza + arreglo[coordenadaX][coordenadaY].color;
         int n = buscar(piezas, nombre);
         numpiezas[n] += 1;
-        setNumero(numpiezas[n]);
+        //setNumero(numpiezas[n]);
+        int x=coordenadaX;
+        int y=coordenadaY;
+        String t=pieza;
+        String c = color;
+        int num = numpiezas[n];
+
+        Pieza nueva = new Pieza(x, y, t, c, num);
+        setActividad(false);
+        arreglo[x][y]=null;
+
+        arreglo[x][y]=nueva;
+        return arreglo[x][y];
     }
 
-    
+
 
 }
