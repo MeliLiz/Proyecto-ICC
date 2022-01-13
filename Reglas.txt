@@ -14,12 +14,22 @@ Se siguen todas las reglas del ajedrez ortodoxo, con las siguientes excepciones:
 
 Para ejecutar el juego:
 
+Jugar directamente
+
 1.Si quieres jugar con la computadora, teclea "java Ajedrez <tunombre>"
 2.Si quieres jugar con otro participante, teclea "java Ajedrez <participante1> <participante2>"
+3.Diviertete
+
+Desde el menu
+
+1.Teclea "java Ajedrez".
+2.Selecciona la opcion "J" en el menu.
+3.Proporciona los datos requeridos.
+4.Diviertete
 
 Para mover piezas
 
-1.Solo puedes mover las piezas del color que te toca.(Si juegas con la computadora te tocan las blancas)
+1.Solo puedes mover las piezas del color que te toca.(Si juegas con la computadora solo puedes mover las blancas)
 2.Debes ingresar el nombre completo de la pieza (Ej: caballo2blanco)
 3.Debes ingresar el numero de fila (de arriba a abajo). Los numeros validos son del 0 a 5 (inclusivo).
 4.Debes ingresar el numero de columna (de izaquierda a derecha).  Los numeros validos son del 0 a 5 (inclusivo).
