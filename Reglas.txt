@@ -1,0 +1,32 @@
+
+
+*****Reglas de Extintion Chess*****
+
+
+Este juego es una variante del ajedrez tradicional en el que no existen alfiles y el tablero es de 6x6 casillas.
+
+El objetivo es llegar a una posición en la que a tu oponente le falten todas las piezas de un tipo: el rey, la dama, los dos caballos, las dos torres o los 6 peones.
+
+Se siguen todas las reglas del ajedrez ortodoxo, con las siguientes excepciones:
+
+1.No hay "jaque" ni "jaque mate". Por lo tanto, el enroque no está limitado por 'estar en jaque' o 'moverse a través del jaque'.
+2.Los peones deben promover al llegar a la 6ª fila. Si se mueve su último peón restante a la 6ª fila, se pierde el juego.
+
+Para ejecutar el juego:
+
+1.Si quieres jugar con la computadora, teclea "java Ajedrez <tunombre>"
+2.Si quieres jugar con otro participante, teclea "java Ajedrez <participante1> <participante2>"
+
+Para mover piezas
+
+1.Solo puedes mover las piezas del color que te toca.(Si juegas con la computadora te tocan las blancas)
+2.Debes ingresar el nombre completo de la pieza (Ej: caballo2blanco)
+3.Debes ingresar el numero de fila (de arriba a abajo). Los numeros validos son del 0 a 5 (inclusivo).
+4.Debes ingresar el numero de columna (de izaquierda a derecha).  Los numeros validos son del 0 a 5 (inclusivo).
+5.Si quieres comer alguna pieza solo debes moverte a la posicion de la misma.
+
+Ganador
+
+1.Puedes escoger 3 niveles dependiendo del numero de movimientos deseados (Nivel 1 10 mov. Nivel 2 40 mov. Nivel 3 100 mov)
+2.Si el numero de movimientos se acaba, el ganador será aleatorio.
+3.El jugador que termine con todas las piezas de un tipo de su oponente será el ganador.

@@ -1,12 +1,30 @@
-//todas direcciones
+/**
+ * Clase que representa a la reina de Ajedrez
+ * @author Melissa Lizbeth Fernandez Blancas
+ * @version 1
+ * @see Pieza
+ */
 public class Reina extends Pieza {
+
+    /**
+     * Metodo constructor
+     * @param x La coordenada X
+     * @param y La coordenada Y
+     * @param color El color de la pieza
+     * @param numero El numero de pieza
+     */
     public Reina(int x, int y, String color, int numero) {
         super(x, y, "reina", color, numero);
     }
 
-    // Metodo que valida si el movimiento del peon es valido y de serlo mueve la
-    // pieza y come
-    public boolean validarMov(int cx, int cy, Pieza[][] arreglo) {
+    /**
+     * Metodo que valida el movimiento del peon. 
+     * @param cx Coordenada x de la posicion a donde se movera la pieza
+     * @param cy Coordenada y de la posicion a donde se movera la pieza
+     * @param arreglo El tablero
+     * @return boolean Si el movimiento es valido, regresa true, en otro caso false
+     */
+    public boolean validar(int cx, int cy, Pieza[][] arreglo) {
         if ((cy == coordenadaY && cx != coordenadaX) || (cx == coordenadaX && cy != coordenadaY)
                 || (Math.abs(coordenadaX - cx) == Math.abs(coordenadaY - cy))) {
             // Ver si hay fichas hasta una casilla antes de la deseada
@@ -94,8 +112,17 @@ public class Reina extends Pieza {
     }
 
     // True si la pieza se mueve, false si no es mov valido
-    public boolean validar(int cx, int cy, Pieza[][] arreglo, String[] piezas, int[] numpiezas) {
-        if (validarMov(cx, cy, arreglo)) {
+    /**
+     * Metodo que mueve a la reina si el movimiento es valido y en su caso come a la pieza del color contrario que esta en la casilla
+     * @param cx Coordenada X a mover la pieza
+     * @param cy Coordenada Y a mover la pieza
+     * @param arreglo El tablero
+     * @param piezas El arreglo con el nombre de las piezas
+     * @param numpiezas El arreglo con el numero de cada pieza
+     * @return boolean Si se pudo mover la pieza regresa true, false en otro caso
+     */
+    public boolean validarMov(int cx, int cy, Pieza[][] arreglo, String[] piezas, int[] numpiezas) {
+        if (validar(cx, cy, arreglo)) {
             if (sePudoMover(cx, cy, arreglo)) {
                 return true;
             } else {

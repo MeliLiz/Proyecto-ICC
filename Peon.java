@@ -1,14 +1,35 @@
+/**
+ * Clase que representa al peon de ajedrez
+ * @author Melissa Lizbeth Fernandez Blancas
+ * @version 1
+ * @see Pieza
+ */
+
 //hacia adelante una casilla. En el primer movimiento se puede mover 2 casilllas
 //capturar piezas diagonales
 //pueden ascender a cualquier otra pieza
 public class Peon extends Pieza {
 
+    /**
+     * Metodo constructor
+     * @param x Coordenada x a la que se quiere mover el peon
+     * @param y Coordenada y a la que se quiere mover el peon
+     * @param color Color del peon
+     * @param num Numero de peon
+     */
     public Peon(int x, int y, String color, int num) {
         super(x, y, "peon", color, num);
     }
 
-    // Metodo que valida si el movimiento del peon es valido y de serlo mueve la
-    // pieza y come
+    /**
+     * // Metodo que valida si el movimiento del peon es valido y de serlo mueve la pieza y si es el caso come a la pieza que estaba antes en esa posicion
+     * @param cx
+     * @param cy
+     * @param arreglo
+     * @param piezas
+     * @param numpiezas
+     * @return
+     */
     public boolean validarMov(int cx, int cy, Pieza[][] arreglo, String[] piezas, int[] numpiezas) {
         String col = color;
         if (cy == coordenadaY) {
@@ -87,7 +108,14 @@ public class Peon extends Pieza {
         }
     }
 
-    // Metodo para promover peones
+    /**
+     * Metodo para promever un peon a otra pieza
+     * @param pieza La pieza a la que se quiere promever al peon
+     * @param arreglo El tablero
+     * @param piezas El arreglo con el nombre de las piezas
+     * @param numpiezas El arreglo con el numero de cada pieza
+     * @return Pieza la pieza promovida
+     */
     public Pieza promover(String pieza, Pieza[][] arreglo, String[] piezas, int[] numpiezas) {
         // obtener nombre de la pieza
         String nombre = arreglo[coordenadaX][coordenadaY].tipo + arreglo[coordenadaX][coordenadaY].color;
@@ -102,13 +130,16 @@ public class Peon extends Pieza {
         String t=pieza;
         String c = color;
         int num = numpiezas[n];
-
-        Pieza nueva = new Pieza(x, y, t, c, num);
         setActividad(false);
-        arreglo[x][y]=null;
+        setTipo(t);
+        setNumero(num);
+        
+        //Pieza nueva = new Pieza(x, y, t, c, num);
+        //arreglo[x][y]=null;
 
-        arreglo[x][y]=nueva;
-        return arreglo[x][y];
+        //arreglo[x][y]=nueva;
+        //return arreglo[x][y];
+        return this;
     }
 
 
