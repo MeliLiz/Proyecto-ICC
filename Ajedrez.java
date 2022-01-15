@@ -33,7 +33,7 @@ public class Ajedrez {
             }
             jugar(movimientos, jugador1blanco,jugador2negro);
         } else {
-            System.out.println("\nNumero de argumentos no valido");
+            System.out.println("\nNumero de argumentos no valido\nPara ver instrucciones teclee \"java Ajedrez\" y seleccione la opcion i\n");
         }
     }//FIN DEL MAIN
 
@@ -103,14 +103,17 @@ public class Ajedrez {
             boolean turnoblanco = true;
             juego: do {
                 
-                preguntaymueve(arreglo, piezas, numpiezas, scan1, scan2, turnoblanco, jugador1blanco, jugador2negro);
+                preguntaymueve(arreglo, piezas, numpiezas, scan1, scan2, turnoblanco, jugador1blanco, jugador2negro, tab);
                 ceros = buscarNum(numpiezas, 0);
                 if (ceros != -1) {
-                    System.out.print("\nEl juego termino, el ganador es ");
+                    tab.visualizarTablero();
+                    String pzd = piezas[ceros];
+                    System.out.println("Se eliminaron todas las fichas " + pzd);
+                    System.out.print("\nEl juego ha terminado, el ganador es ");
                     if (turnoblanco) {
-                        System.out.print(jugador1blanco);
+                        System.out.print(jugador1blanco+"\n");
                     } else {
-                        System.out.print(jugador2negro);
+                        System.out.print(jugador2negro+"\n");
                     }
                     break juego;
                 }
@@ -118,6 +121,7 @@ public class Ajedrez {
                 movimientos -= 1;
             } while (ceros == -1 && movimientos != 0);
             if (movimientos == 0) {
+                tab.visualizarTablero();
                 System.out.println("Se acabaron los movimientos posibles, gana ");
                 if (random.nextInt(2) == 1) {
                     System.out.println(jugador1blanco);
@@ -198,28 +202,8 @@ public class Ajedrez {
     }//FIN DE REGRESAR POS PIEZA
 
     /**
-     * Metodo para imprimir el tablero
-     * @param arreglo El tablero
-     * @return
-     */
-    public static String visualizarTablero(Pieza[][] arreglo) {
-        System.out.println();
-        for (int i = 0; i < arreglo.length; i++) {
-            for (int j = 0; j < arreglo[0].length; j++) {
-                if (arreglo[i][j] == null) {
-                    System.out.print(" --(" + i + "," + j + ")----  ");
-                } else {
-                    System.out.print(arreglo[i][j] + "   ");
-                }
-            }
-            System.out.println("\n");
-        }
-        return " ";
-    }//FIN DE VISUALIZAR TABLERO
-
-    /**
      * Metodo para hacer las validaciones dependiendo de la pieza a mover
-     * @param arreglo El tablero
+     * @param arreglo El arreglo
      * @param piezas El arreglo con el nombre de las piezas
      * @param numpiezas El arreglo con el numero de cada pieza
      * @param scan1 Un scanner
@@ -227,9 +211,10 @@ public class Ajedrez {
      * @param turnoblanco Si es turno de las piezas blancas o de las negras
      * @param jugador1blanco Jugador 1
      * @param jugador2negro Jugador 2
+     * @param tab El tablero
      */
     public static void preguntaymueve(Pieza[][] arreglo, String[] piezas, int[] numpiezas, Scanner scan1,
-            Scanner scan2, boolean turnoblanco, String jugador1blanco, String jugador2negro) {
+            Scanner scan2, boolean turnoblanco, String jugador1blanco, String jugador2negro, Tablero tab) {
 
         Random random =new Random();
         //int w = 0;
@@ -254,7 +239,8 @@ public class Ajedrez {
                 if(jugador2negro.equals("Computadora")&&!turnoblanco){
 
                 }else{
-                    System.out.println(visualizarTablero(arreglo));
+                    tab.visualizarTablero();
+                    //System.out.println(tab.visualizarTablero());
                 }
                 //System.out.println(visualizarTablero(arreglo));
                 if(jugador2negro.equals("Computadora") && !turnoblanco){
@@ -303,12 +289,28 @@ public class Ajedrez {
                                 columna = elegidos[1];
                                 System.out.println("("+fila+","+columna+")");/////////////////////////////////////////////////
                             }else{
-                                System.out.println("Ingresa el numero de fila(0-5 de arriba a abajo)");
-                                fila = scan2.nextInt();
-                                System.out.println("Ingresa el numero de columna(0-5 de izquierda a derecha)");
-                                columna = scan2.nextInt();
+                                boolean z=true;
+                                do{
+                                    System.out.println("Ingresa el numero de fila(0-5 de arriba a abajo)");
+                                    try{
+                                        fila = scan2.nextInt();
+                                        z=false;
+                                    }catch(Exception e){
+                                        System.out.println("Respuesta no valida");
+                                    }
+                                }while(z);
+                                z=true;
+                                do{
+                                    System.out.println("Ingresa el numero de columna(0-5 de izquierda a derecha)");
+                                    try{
+                                        columna = scan2.nextInt();
+                                        z=false;
+                                    }catch(Exception e){
+                                        System.out.println("Respuesta no valida");
+                                    }
+                                }while(z);       
                             }
-                            if (fila < 0 || fila > 5|| columna < 0 || columna > 5) {
+                            if (fila < 0 || fila > 5|| columna < 0 || columna > 5) { //Verifica si el numero esta dentro del rango del tablero
                                 if(jugador2negro.equals("Computadora")&&!turnoblanco){
                                     System.out.println("Calculando posicion");
                                 }else{
@@ -460,7 +462,6 @@ public class Ajedrez {
 
     /**
      * Menu de opciones
-     * @param scan1 Un scanner
      */
     public static void menu() {
         //Scanner scan1 = new Scanner(System.in);
@@ -483,10 +484,12 @@ public class Ajedrez {
                         while (s.hasNextLine()){
                             System.out.println(s.nextLine());
                         }
+                        System.out.println("\nPresione cualquier tecla seguida de enter para volver al menu");
+                        sc.next();
+                        menu();
                     }catch(FileNotFoundException e){
                         System.out.println("El archivo no existe");
                     }
-
                     h = false;
                     break;
                 case "g":
@@ -495,6 +498,7 @@ public class Ajedrez {
                     break;
                 case "s":
                     h = false;
+                    System.out.println("Saliendo...");
                     System.exit(0);
                     break;
                 case "j":
@@ -522,10 +526,10 @@ public class Ajedrez {
                     jugador1=sc.nextLine();
                     
                     jugar(mov,jugador1,jugador2);
+                    System.exit(0);
                     break;
                 default:
                     break sw;
-
             }
         } while (h);
     }//FIN DE MENU

@@ -131,8 +131,19 @@ public class Peon extends Pieza {
         String c = color;
         int num = numpiezas[n];
         setActividad(false);
-        setTipo(t);
-        setNumero(num);
+        try{
+            setTipo(t);
+        }catch(NoValidoException e){
+            System.out.println("Error: " + e.getMessage());
+            System.exit(-1);
+        }
+        try{
+            setNumero(num);
+        }catch(NoValidoException e){
+            System.out.println("Error: " + e.getMessage());
+            System.exit(-1);
+        }
+        
         
         //Pieza nueva = new Pieza(x, y, t, c, num);
         //arreglo[x][y]=null;

@@ -50,10 +50,11 @@ public abstract class Pieza {
     /**
      * Metodo para modificar el numero de movimiento
      * @param n El nuevo numero de movimiento
+     * @throws NoValidoException Error si el numero es menor a 0
      */
-    public void setNumMov(int n) {
+    public void setNumMov(int n) throws NoValidoException {
         if (n < 0) {
-            // error
+            throw new NoValidoException("Numero de movimiento no valido");
         } else {
             numMov = n;
         }
@@ -62,12 +63,13 @@ public abstract class Pieza {
     /**
      * Metodo para modificar el numero de pieza
      * @param num El nuevo numero de pieza
+     * @throws NoValidoException Error si el numero de pieza es menor a 1 o mayor a 8
      */
-    public void setNumero(int num) {
+    public void setNumero(int num) throws NoValidoException {
         if (num > 0 && num < 9) {
             numero = num;
         } else {
-            throw new RuntimeException("Numero no valido");
+            throw new NoValidoException("Numero de pieza no valido");
         }
     }
 
@@ -82,64 +84,60 @@ public abstract class Pieza {
     /**
      * Metodo para modificar la coordenada X de la pieza
      * @param x La nueva coordenada X
+     * @throws NoValidoException Error si la coordenada dada es mayor a 5 o menor a 0
      */
-    public void setCoordenadaX(int x) {
+    public void setCoordenadaX(int x) throws NoValidoException {
         if (x < 6 && x >= 0) {
             coordenadaX = x;
         } else {
-            throw new RuntimeException("Coordenada x no valida");
-
+            throw new NoValidoException("Coordenada x no valida");
         }
     }
 
     /**
      * Metodo para modificar la coordenada Y de la pieza
      * @param y La nueva coordenada Y
+     * @throws NoValidoException Error si la coordenada dada es mayor a 5 o menor a 0
      */
-    public void setCoordenadaY(int y) {
+    public void setCoordenadaY(int y) throws NoValidoException {
         if (y < 6 && y >= 0) {
             coordenadaY = y;
         } else {
-            try {
-                throw new RuntimeException();
-            } catch (RuntimeException e) {
-                System.out.println("Coordenada no valida");
-            }
+            throw new NoValidoException("Coordenada y no valida");
         }
     }
 
     /**
      * Metodo para modificar el tipo de pieza
      * @param tipo El nuevo tipo de pieza
+     * @throws NoValidoException Error si el tipo de pieza no es torre, caballo, rey, reina o peon
      */
-    public void setTipo(String tipo) {
+    public void setTipo(String tipo) throws NoValidoException {
         tipo = tipo.strip().toLowerCase();
         if (tipo.equals("torre") || tipo.equals("rey") || tipo.equals("reina") || tipo.equals("peon")
                 || tipo.equals("caballo")) {
             this.tipo = tipo;
         } else {
-            try {
-                throw new RuntimeException();
-            } catch (RuntimeException e) {
-                System.out.println("Tipo no valido");
-            }
+            throw new NoValidoException("Tipo de pieza no valida");
         }
     }
 
     /**
      * Metodo para modificar el color de la pieza
      * @param color El nuevo color de pieza
+     * @throws NoValidoException Error si el color no es blanco o negro
      */
-    public void setColor(String color) {
+    public void setColor(String color) throws NoValidoException {
         color = color.strip().toLowerCase();
         if (color.equals("blanco") || color.equals("negro")) {
             this.color = color;
         } else {
-            try {
+            /*try {
                 throw new RuntimeException();
             } catch (RuntimeException e) {
                 System.out.println("Color no valido");
-            }
+            }*/
+            throw new NoValidoException("Color de pieza no valido");
         }
     }
 
@@ -211,6 +209,7 @@ public abstract class Pieza {
      * Metodo para representar a la pieza en forma de cadena
      * @return String La representacion pieza en forma de String
      */
+    @Override
     public String toString() {
         return tipo + numero + color;
     }
@@ -219,6 +218,7 @@ public abstract class Pieza {
      * Metodo para saber si una pieza es igual a otra
      * @return boolean Si la pieza es igual regresa true, en otro caso false
      */
+    @Override
     public boolean equals(Object pieza) {
         Pieza pz = (Pieza) pieza;
         return coordenadaX == pz.coordenadaX && coordenadaY == pz.coordenadaY && tipo.equals(pz.tipo)
@@ -246,8 +246,19 @@ public abstract class Pieza {
     public void mover(int cx, int cy, Pieza[][] arreglo) {
         int x = getCoordenadaX();
         int y = getCoordenadaY();
-        setCoordenadaX(cx);
-        setCoordenadaY(cy);
+        try{
+            setCoordenadaX(cx);
+        }catch(NoValidoException e){
+            System.out.println("Error: " + e.getMessage());
+            System.exit(-1);
+        }
+
+        try{
+            setCoordenadaY(cy);
+        }catch(NoValidoException e){
+            System.out.println("Error: " + e.getMessage());
+            System.exit(-1);
+        }
         arreglo[cx][cy] = arreglo[x][y];
         arreglo[x][y] = null;
         numMov += 1;

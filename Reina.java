@@ -72,34 +72,42 @@ public class Reina extends Pieza {
                 int restay = cy - coordenadaY;
                 if (restax < 0 && restay < 0) {
                     boolean g = true;
-                    for (int i = cy + 1; i < coordenadaY; i++) {
-                        if (arreglo[i][i] != null) {
+                    int c=1;
+                    for (int i = cy + 1; i < coordenadaY; i++) {////////////////////////////////////////////////
+                        if (arreglo[cx+c][cy+c] != null) {
                             g = false;
                         }
+                        c+=1;
                     }
                     return g;
-                } else if (restax < 0 && restay > 0) {
+                } else if (restax < 0 && restay > 0) {///////////////////////////////////////////////////
                     boolean g = true;
+                    int c=1;
                     for (int i = coordenadaY + 1; i < cy; i++) {
-                        if (arreglo[i][i] != null) {
+                        if (arreglo[coordenadaX-c][coordenadaY+c] != null) {
                             g = false;
                         }
+                        c+=1;
                     }
                     return g;
                 } else if (restax > 0 && restay < 0) {
                     boolean g = true;
+                    int c=1;
                     for (int i = cy + 1; i < coordenadaY; i++) {
-                        if (arreglo[i][i] != null) {
+                        if (arreglo[cx-c][cy+c] != null) {
                             g = false;
                         }
+                        c+=1;
                     }
                     return g;
                 } else {// si restax>0&&restay>0
                     boolean g = true;
+                    int c=1;
                     for (int i = coordenadaY + 1; i < cy; i++) {
-                        if (arreglo[i][i] != null) {
+                        if (arreglo[coordenadaX+c][coordenadaY+c] != null) {
                             g = false;
                         }
+                        c+=1;
                     }
                     return g;
                 }
