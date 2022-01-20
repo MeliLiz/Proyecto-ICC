@@ -1,10 +1,10 @@
 /**
  * Clase que representa al caballo de ajedrez
- * @author Melissa Lizbeth Fernández Blancas
+ * @author Melissa Lizbeth Fernandez Blancas
  * @version 1
  * @see Pieza
  */
-//en L, 2 horizontal, 1 vertical. Puede saltar sobre cualquier pieza
+//Movimiento en L, 2 horizontal, 1 vertical o viceversa. Puede saltar sobre cualquier pieza.
 public class Caballo extends Pieza {
 
     /**
@@ -48,6 +48,10 @@ public class Caballo extends Pieza {
         }
     }
 
+    /**
+     * Metodo para representar al caballo en forma de String
+     * @return String Representacion en String del caballo
+     */
     @Override
     public String toString() {
         if(this.color.equals("blanco")){

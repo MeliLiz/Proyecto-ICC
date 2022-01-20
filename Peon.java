@@ -5,9 +5,9 @@
  * @see Pieza
  */
 
-//hacia adelante una casilla. En el primer movimiento se puede mover 2 casilllas
+//Movimiento hacia adelante una casilla. En el primer movimiento se puede mover 2 casilllas
 //capturar piezas diagonales
-//pueden ascender a cualquier otra pieza
+//pueden ascender a cualquier otra pieza excepto rey al llegar a la ultima fila
 public class Peon extends Pieza {
 
     /**
@@ -153,15 +153,16 @@ public class Peon extends Pieza {
         return this;
     }
 
+    /**
+     * Metodo para representar al peon en forma de String
+     * @return String Representacion en String del peon
+     */
     @Override
     public String toString() {
         if(this.color.equals("blanco")){
             return tipo + numero + color+"   ";
         }else{
             return tipo + numero + color+"    ";
-        }
-            
+        }         
     }
-
-
 }

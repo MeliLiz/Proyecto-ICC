@@ -316,5 +316,14 @@ public abstract class Pieza {
 
     }
 
+    /**
+     * Metodo abstracto para validar el movimiento de la pieza
+     * @param cx Coordenada x a mover la pieza
+     * @param cy Coordenada y a mover la pieza
+     * @param arreglo El arreglo del tablero
+     * @param piezas El arreglo que contiene el nombre de las piezas
+     * @param numpiezas El arreglo que contiene el numero de cada pieza
+     * @return boolean True si el movimiento es valido, false en otro caso
+     */
     public abstract boolean validarMov(int cx, int cy, Pieza[][] arreglo, String[] piezas, int[] numpiezas);
 }

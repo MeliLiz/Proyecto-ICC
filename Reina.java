@@ -146,6 +146,10 @@ public class Reina extends Pieza {
         }
     }
 
+    /**
+     * Metodo para representar a la reina en forma de String
+     * @return String Representacion en String de la reina
+     */
     @Override
     public String toString() {
         if(this.color.equals("blanco")){

@@ -16,8 +16,7 @@ public class Rey extends Pieza {
         super(x, y, "rey", color, num);
     }
 
-    // Método que valida si el movimiento del peón es válido y de serlo mueve la
-    // pieza y come
+    // Metodo que validael movimiento del peon y de serlo mueve la pieza y come
     /**
      * Metodo que valida si el movimiento del rey es valido y de serlo mueve la pieza, en su caso, come a la pieza de distinto color que esta en esa casilla
      * @param cx Coordenada x a donde se quiere mover la pieza
@@ -45,6 +44,10 @@ public class Rey extends Pieza {
         }
     }
 
+    /**
+     * Metodo para representar al rey en forma de String
+     * @return String Representacion en String del rey
+     */
     @Override
     public String toString() {
         if(this.color.equals("blanco")){

@@ -154,6 +154,10 @@ public class Torre extends Pieza {
         }
     }
 
+    /**
+     * Metodo para representar a la torre en forma de String
+     * @return String Representacion en String de la torre
+     */
     @Override
     public String toString() {
         if(this.color.equals("blanco")){
