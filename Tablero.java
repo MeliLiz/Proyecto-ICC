@@ -107,15 +107,23 @@ public class Tablero{
     public void visualizarTablero() {
         System.out.println();
         for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(i+"   ");
             for (int j = 0; j < arreglo[0].length; j++) {
                 if (arreglo[i][j] == null) {
-                    System.out.print(" --(" + i + "," + j + ")----  ");
+                    System.out.print("----(" + j + "," + i + ")---- " + "   ");
                 } else {
                     System.out.print(arreglo[i][j] + "   ");
                 }
             }
             System.out.println("\n");
         }
+        int[] num = {0,1,2,3,4,5};
+        System.out.print("    ");
+        for(int i=0;i<num.length;i++){
+            System.out.print("    "+i+"   ");
+            System.out.print("         ");
+        }
+        System.out.println("\n");
         //return " ";
     }//FIN DE VISUALIZAR TABLERO
     

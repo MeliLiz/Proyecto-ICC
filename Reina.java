@@ -145,4 +145,13 @@ public class Reina extends Pieza {
             return false;
         }
     }
+
+    @Override
+    public String toString() {
+        if(this.color.equals("blanco")){
+            return tipo + numero + color+"  ";
+        }else{
+            return tipo + numero + color+"   ";
+        }   
+    }
 }

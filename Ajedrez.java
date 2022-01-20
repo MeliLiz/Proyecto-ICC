@@ -291,19 +291,20 @@ public class Ajedrez {
                             }else{
                                 boolean z=true;
                                 do{
-                                    System.out.println("Ingresa el numero de fila(0-5 de arriba a abajo)");
+                                    System.out.println("Ingresa el numero de columna(0-5 de izquierda a derecha)");
                                     try{
-                                        fila = scan2.nextInt();
+                                        columna = scan2.nextInt();
                                         z=false;
                                     }catch(Exception e){
                                         System.out.println("Respuesta no valida");
                                     }
+                                    
                                 }while(z);
                                 z=true;
                                 do{
-                                    System.out.println("Ingresa el numero de columna(0-5 de izquierda a derecha)");
+                                    System.out.println("Ingresa el numero de fila(0-5 de arriba a abajo)");
                                     try{
-                                        columna = scan2.nextInt();
+                                        fila = scan2.nextInt();
                                         z=false;
                                     }catch(Exception e){
                                         System.out.println("Respuesta no valida");

@@ -153,6 +153,15 @@ public class Peon extends Pieza {
         return this;
     }
 
+    @Override
+    public String toString() {
+        if(this.color.equals("blanco")){
+            return tipo + numero + color+"   ";
+        }else{
+            return tipo + numero + color+"    ";
+        }
+            
+    }
 
 
 }
