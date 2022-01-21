@@ -1,4 +1,7 @@
-public class Jugador{
+import java.io.Serializable;
+
+import java.io.Serializable;
+public class Jugador implements Serializable{
     protected String nombre;
     //protected int vecesGanadas;
     protected boolean gana;
@@ -8,7 +11,6 @@ public class Jugador{
         gana = false;
         //vecesGanadas
     }
-
 
     public Jugador(String nombre){
         this.nombre=nombre;
@@ -47,6 +49,4 @@ public class Jugador{
     public String toString(){
         return "Jugador(a) " + nombre;
     }
-
-
 }

@@ -7,6 +7,13 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.EOFException;
 
 public class Ajedrez {
 
@@ -44,34 +51,35 @@ public class Ajedrez {
     public static int seleccionarNivel(){
         Scanner scan = new Scanner(System.in);
         boolean si = true;
-            int nivel;
-            int movimientos=0;
-            do{
-                System.out.println("\nSelecciona el nivel\n");
-                System.out.println("(1) Nivel 1 (10 movimientos)");
-                System.out.println("(2) Nivel 2 (40 movimientos)");
-                System.out.println("(3) Nivel 3 (100 movimientos)");
-                try{
-                    nivel = scan.nextInt();
-                    if(nivel==1||nivel==2||nivel==3){
-                        if(nivel==1){
-                            movimientos=10;
-                            si=false;
-                        }else if(nivel==2){
-                            movimientos=40;
-                        }else{
-                            movimientos=100;
-                        }
+        int nivel;
+        int movimientos=0;
+        do{
+            System.out.println("\nSelecciona el nivel\n");
+            System.out.println("(1) Nivel 1 (10 movimientos)");
+            System.out.println("(2) Nivel 2 (40 movimientos)");
+            System.out.println("(3) Nivel 3 (100 movimientos)");
+            try{
+                nivel = scan.nextInt();
+                if(nivel==1||nivel==2||nivel==3){
+                    if(nivel==1){
+                        movimientos=10;
                         si=false;
+                    }else if(nivel==2){
+                        movimientos=40;
                     }else{
-                        System.out.println("No es una opcion valida");
+                        movimientos=100;
                     }
-                }catch(Exception e){
-                    System.out.println("Respuesta no valida");
-                    scan.next();
+                    si=false;
+                }else{
+                    System.out.println("No es una opcion valida");
                 }
-            }while(si);
-            return movimientos; 
+            }catch(Exception e){
+                System.out.println("Respuesta no valida");
+                scan.next();
+            }
+        }while(si);
+        //scan.close();
+        return movimientos; 
     }//FIN DE SELECCIONAR NIVEL
 
     /**
@@ -82,6 +90,8 @@ public class Ajedrez {
      */
     public static void jugar(int movimientos, String jugador1blanco, String jugador2negro){
 
+        Jugador n1=new Jugador(jugador1blanco);
+        Jugador n2=new Jugador(jugador2negro);
         Scanner scan1 = new Scanner(System.in);
         Scanner scan2 = new Scanner(System.in);
         Random random = new Random();
@@ -112,8 +122,10 @@ public class Ajedrez {
                     System.out.print("\nEl juego ha terminado, el ganador es ");
                     if (turnoblanco) {
                         System.out.print(jugador1blanco+"\n");
+                        n1.setGana(true);
                     } else {
                         System.out.print(jugador2negro+"\n");
+                        n2.setGana(true);
                     }
                     break juego;
                 }
@@ -125,9 +137,21 @@ public class Ajedrez {
                 System.out.println("Se acabaron los movimientos posibles, gana ");
                 if (random.nextInt(2) == 1) {
                     System.out.println(jugador1blanco);
+                    n1.setGana(true);
                 } else {
                     System.out.println(jugador2negro);
+                    n2.setGana(true);
                 }
+            }
+            //Serializar
+            try{
+                ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("jugadores.dat"));
+                obj.writeObject(n1);
+                obj.writeObject(n2);
+            }catch(FileNotFoundException e){
+                System.out.println("Archivo no encontrado");
+            }catch(IOException e){
+                System.out.println("IOException");
             }
     }//FIN DE JUGAR
 
@@ -471,7 +495,7 @@ public class Ajedrez {
         System.out.println("Selecciona una opcion (Ingresa la letra)");
         System.out.println("\n(I) Ver instrucciones");
         System.out.println("(J) Jugar");
-        System.out.println("(G) Ver participantes");// 3 participante de menor a mayor
+        System.out.println("(P) Participantes recientes");// 3 participante de menor a mayor
         System.out.println("(S) Salir");
         boolean h = true;
         do {
@@ -488,13 +512,43 @@ public class Ajedrez {
                         System.out.println("\nPresione cualquier tecla seguida de enter para volver al menu");
                         sc.next();
                         menu();
+                        //s.close();
                     }catch(FileNotFoundException e){
                         System.out.println("El archivo no existe");
                     }
                     h = false;
                     break;
-                case "g":
-                    // listar participantes
+                case "p":
+                    ObjectInputStream ois = null;
+                    try{
+                        ois = new ObjectInputStream(new FileInputStream("jugadores.dat"));
+                        Jugador obj = null;
+                        do{
+                            obj = (Jugador) ois.readObject();
+                            System.out.print("\n" + obj.nombre);
+                            if(obj.gana==true){
+                                System.out.print(" Ganador" + "\n");
+                            }else{
+                                System.out.print(" No ganador" + "\n");
+                            }
+                        }while(obj !=null);
+                    }catch(FileNotFoundException e){
+                        System.out.println("No hay jugadores recientes");
+                    }catch(ClassNotFoundException e){
+                        System.out.println("Clase no encontrada");
+                    }catch(EOFException e){
+                        System.out.println();
+                    }catch(IOException e){
+                        System.out.println("IO Exception");
+                    }finally{
+                        try{
+                            if(ois!=null){
+                                ois.close();
+                            }
+                        }catch(IOException e){
+                            System.out.println();
+                        }  
+                    }
                     h = false;
                     break;
                 case "s":
@@ -533,6 +587,7 @@ public class Ajedrez {
                     break sw;
             }
         } while (h);
+        //sc.close();
     }//FIN DE MENU
 
     /**
