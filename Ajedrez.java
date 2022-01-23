@@ -53,14 +53,14 @@ public class Ajedrez {
         int movimientos=0;
         do{
             System.out.println("\nSelecciona el nivel\n");
-            System.out.println("(1) Nivel 1 (10 movimientos)");
+            System.out.println("(1) Nivel 1 (20 movimientos)");
             System.out.println("(2) Nivel 2 (40 movimientos)");
             System.out.println("(3) Nivel 3 (100 movimientos)");
             try{
                 nivel = scan.nextInt();
                 if(nivel==1||nivel==2||nivel==3){
                     if(nivel==1){
-                        movimientos=10;
+                        movimientos=20;
                         si=false;
                     }else if(nivel==2){
                         movimientos=40;
