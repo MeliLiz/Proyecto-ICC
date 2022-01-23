@@ -3,6 +3,8 @@
 *****Reglas de Extintion Chess*****
 
 
+*Es recomendable expandir la pantalla de la terminal para visualizar correctamente el tablero*
+
 Este juego es una variante del ajedrez tradicional en el que no existen alfiles y el tablero es de 6x6 casillas.
 
 El objetivo es llegar a una posición en la que a tu oponente le falten todas las piezas de un tipo: el rey, la dama, los dos caballos, las dos torres o los 6 peones.

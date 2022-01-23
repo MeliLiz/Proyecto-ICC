@@ -7,13 +7,11 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
-import java.io.ObjectOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.FileInputStream;
-import java.io.EOFException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.FileWriter;
+import java.io.RandomAccessFile;
 
 public class Ajedrez {
 
@@ -92,6 +90,9 @@ public class Ajedrez {
 
         Jugador n1=new Jugador(jugador1blanco);
         Jugador n2=new Jugador(jugador2negro);
+        Date date = new Date();
+        String fecha = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
         Scanner scan1 = new Scanner(System.in);
         Scanner scan2 = new Scanner(System.in);
         Random random = new Random();
@@ -127,6 +128,7 @@ public class Ajedrez {
                         System.out.print(jugador2negro+"\n");
                         n2.setGana(true);
                     }
+                    fecha=formatter.format(date);
                     break juego;
                 }
                 turnoblanco = !turnoblanco;
@@ -142,16 +144,32 @@ public class Ajedrez {
                     System.out.println(jugador2negro);
                     n2.setGana(true);
                 }
+                fecha=formatter.format(date);
             }
-            //Serializar
-            try{
-                ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("jugadores.dat"));
-                obj.writeObject(n1);
-                obj.writeObject(n2);
-            }catch(FileNotFoundException e){
-                System.out.println("Archivo no encontrado");
-            }catch(IOException e){
-                System.out.println("IOException");
+            try {
+                //Crear un objeto File para crear o abrir acceso a un archivo 
+                File archivo = new File("juego.txt");
+                //Crear objeto FileWriter para escribir en el archivo
+                FileWriter escribir = new FileWriter(archivo, true);
+                //Escribimos en el archivo con el metodo write 
+                escribir.write("\n"+fecha+"     ");
+                escribir.write(n1.nombre+"   ");
+                if(n1.gana){
+                    escribir.write("Ganador");
+                }else{
+                    escribir.write("No ganador");
+                }
+                escribir.write("     "+n2.nombre+"   ");
+                if(n2.gana){
+                    escribir.write("Ganador");
+                }else{
+                    escribir.write("No ganador");
+                }
+                //Cerramos la conexion
+                escribir.close();
+            } //Si existe un problema al escribir
+            catch (Exception e) {
+                System.out.println("Error al escribir");
             }
     }//FIN DE JUGAR
 
@@ -251,9 +269,6 @@ public class Ajedrez {
         } else {
             System.out.println("\nTurno de " + jugador2negro + "\n");
         }
-
-        // Se repite hasta ingresar un movimiento valido
-        //do {
             // se repite la pregunta hasta que se responda con una pieza valida
 
             pieza: do {
@@ -464,32 +479,25 @@ public class Ajedrez {
                                 break;
                             default:
                         }
-                        // System.out.println(visualizarTablero(arreglo));
-
                     } else {
                         if(jugador2negro.equals("Computadora")&&!turnoblanco){
                         }else{
                             System.out.println("\nPieza no valida\n");
                         } 
-                        //w = 1;
                     }
                 } else {
                     if(jugador2negro.equals("Computadora")&&!turnoblanco){
                     }else{
                         System.out.println("\nPieza no valida\n");
                     } 
-                    //w = 1;
                 }
-                // System.out.println(visualizarTablero(arreglo));
             } while (x);
-        //} while (w == 1);
     }//FIN DE PREGUNTA Y MUEVE
 
     /**
      * Menu de opciones
      */
     public static void menu() {
-        //Scanner scan1 = new Scanner(System.in);
         Scanner sc = new Scanner(System.in);
         System.out.println("\nExtintion Chess\n***Menu***");
         System.out.println("Selecciona una opcion (Ingresa la letra)");
@@ -519,35 +527,17 @@ public class Ajedrez {
                     h = false;
                     break;
                 case "p":
-                    ObjectInputStream ois = null;
                     try{
-                        ois = new ObjectInputStream(new FileInputStream("jugadores.dat"));
-                        Jugador obj = null;
-                        do{
-                            obj = (Jugador) ois.readObject();
-                            System.out.print("\n" + obj.nombre);
-                            if(obj.gana==true){
-                                System.out.print(" Ganador" + "\n");
-                            }else{
-                                System.out.print(" No ganador" + "\n");
-                            }
-                        }while(obj !=null);
+                        File f = new File ("juego.txt");
+                        Scanner s = new Scanner(f);
+                        System.out.println(tail(f, 3));
                     }catch(FileNotFoundException e){
                         System.out.println("No hay jugadores recientes");
-                    }catch(ClassNotFoundException e){
-                        System.out.println("Clase no encontrada");
-                    }catch(EOFException e){
-                        System.out.println();
-                    }catch(IOException e){
-                        System.out.println("IO Exception");
-                    }finally{
-                        try{
-                            if(ois!=null){
-                                ois.close();
-                            }
-                        }catch(IOException e){
-                            System.out.println();
-                        }  
+                    }
+                    finally{
+                        System.out.println("\nPresione cualquier tecla seguida de enter para volver al menu");
+                        sc.next();
+                        menu();
                     }
                     h = false;
                     break;
@@ -587,8 +577,52 @@ public class Ajedrez {
                     break sw;
             }
         } while (h);
-        //sc.close();
     }//FIN DE MENU
+
+    /**
+     * Metodo para imprimir las ultimas 3 lineas del archivo con datos de los jugadores
+     * @param file El archivo a leer
+     * @param lines El numero de lineas a leer desde el final
+     * @return Lineas del archivo
+     */
+    public static String tail(File file, int lines) { 
+        RandomAccessFile fileHandler = null; 
+        try { 
+            fileHandler = new java.io.RandomAccessFile( file, "r" ); 
+            long fileLength = fileHandler.length() - 1; 
+            StringBuilder sb = new StringBuilder(); 
+            int line = 0; 
+            for(long filePointer = fileLength; filePointer != -1; filePointer--){ 
+                fileHandler.seek( filePointer ); 
+                int readByte = fileHandler.readByte(); 
+                if( readByte == 0xA ) { 
+                    if (filePointer < fileLength) { 
+                        line = line + 1; } 
+                } else if( readByte == 0xD ) { 
+                    if (filePointer < fileLength-1) { 
+                        line = line + 1; 
+                    }      
+                }
+                if (line >= lines) { 
+                    break; 
+                } 
+                sb.append( ( char ) readByte ); 
+            } 
+            String lastLine = sb.reverse().toString(); 
+            return lastLine; 
+        } catch(FileNotFoundException e ) { 
+            e.printStackTrace(); 
+            return null; 
+        } catch(IOException e ) { 
+            e.printStackTrace(); return null; 
+        } finally { 
+            if (fileHandler != null ) 
+            try { 
+                fileHandler.close(); 
+            } catch (IOException e) { 
+            } 
+        } 
+    }//FIN DE TAIL
 
     /**
      * Metodo para calcular movimmientos posibles dependiendo del tipo de pieza
