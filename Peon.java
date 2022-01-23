@@ -120,11 +120,9 @@ public class Peon extends Pieza {
         // obtener nombre de la pieza
         String nombre = arreglo[coordenadaX][coordenadaY].tipo + arreglo[coordenadaX][coordenadaY].color;
         numpiezas[buscar(piezas, nombre)] -= 1;
-        //setTipo(pieza);
         nombre = pieza + arreglo[coordenadaX][coordenadaY].color;
         int n = buscar(piezas, nombre);
         numpiezas[n] += 1;
-        //setNumero(numpiezas[n]);
         int x=coordenadaX;
         int y=coordenadaY;
         String t=pieza;
@@ -143,13 +141,6 @@ public class Peon extends Pieza {
             System.out.println("Error: " + e.getMessage());
             System.exit(-1);
         }
-        
-        
-        //Pieza nueva = new Pieza(x, y, t, c, num);
-        //arreglo[x][y]=null;
-
-        //arreglo[x][y]=nueva;
-        //return arreglo[x][y];
         return this;
     }
 
