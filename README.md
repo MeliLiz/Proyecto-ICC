@@ -9,4 +9,4 @@ Para jugar
 --------
 1. Clona el respositorio
 2. Compila los archivos del proyecto
-3. Ejecuta el programa
+3. Ejecuta el programa con <java Ajedrez>
